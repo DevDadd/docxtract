@@ -11,9 +11,7 @@ class HomePage extends StatelessWidget {
     final features = docBloc.state.features;
 
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('SmartDocXtract'),
-      ),
+      appBar: AppBar(title: Center(child: const Text('SmartDocXtract'))),
       body: Column(
         children: [
           const SizedBox(height: 20),
@@ -71,8 +69,10 @@ class HomePage extends StatelessWidget {
     );
   }
 
-   Widget _itemCard(Color color, IconData icon) {
+  Widget _itemCard(Color color, IconData icon) {
     return Container(
+      width: 50,
+      height: 50,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(8),
         color: color,
