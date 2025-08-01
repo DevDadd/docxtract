@@ -17,7 +17,7 @@ class HomePage extends StatelessWidget {
         children: [
           Positioned.fill(
             child: Image.asset(
-              '/Users/quanganh/flutterproject/smartdocxtract/lib/assets/bg1.png', 
+              '/Users/quanganh/flutterproject/smartdocxtract/lib/assets/bg1.png',
               fit: BoxFit.cover,
             ),
           ),
