@@ -7,5 +7,8 @@ import 'package:smartdocxtract/bloc/doc_state.dart';
 
 class DocBloc extends Bloc<DocEvent, DocState> {
   DocBloc() : super(DocState()) {
+    on<UpdateSearchQuery>((event, emit){
+      emit(state.copyWith(searchQuery: event.query));
+    });
   }
 }

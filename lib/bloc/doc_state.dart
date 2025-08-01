@@ -1,5 +1,6 @@
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
+
 import 'package:smartdocxtract/model/feature.dart';
 import 'package:smartdocxtract/pages/extract_text_page.dart';
 import 'package:smartdocxtract/pages/layout_extraction_page.dart';
@@ -10,8 +11,9 @@ import 'package:smartdocxtract/pages/uploaddoc_page.dart';
 
 class DocState extends Equatable {
   final List<Feature> features;
+  final String searchQuery;
 
-  DocState({List<Feature>? features})
+  DocState({List<Feature>? features, this.searchQuery = ''})
       : features = features ?? _defaultFeatures;
 
   static final List<Feature> _defaultFeatures = [
@@ -39,5 +41,15 @@ class DocState extends Equatable {
   ];
 
   @override
-  List<Object> get props => [features];
+  List<Object> get props => [features,searchQuery];
+
+  DocState copyWith({
+    List<Feature>? features,
+    final String? searchQuery,
+  }) {
+    return DocState(
+      features: features ?? this.features,
+      searchQuery: searchQuery ?? this.searchQuery,
+    );
+  }
 }

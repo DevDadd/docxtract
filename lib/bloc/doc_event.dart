@@ -7,3 +7,8 @@ class DocEvent extends Equatable {
   @override
   List<Object> get props => [];
 }
+
+class UpdateSearchQuery extends DocEvent {
+  final String query;
+  const UpdateSearchQuery(this.query);
+}
