@@ -7,61 +7,97 @@ class HomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    DocBloc docBloc = BlocProvider.of<DocBloc>(context);
+    final docBloc = BlocProvider.of<DocBloc>(context);
     final features = docBloc.state.features;
 
     return Scaffold(
-      appBar: AppBar(title: Center(child: const Text('SmartDocXtract'))),
-      body: Column(
+      body: Stack(
         children: [
-          const SizedBox(height: 20),
-
-          Center(
-            child: SizedBox(
-              width: MediaQuery.of(context).size.width * 0.9,
-              child: SearchBar(
-                hintText: "Search features...",
-                leading: const Icon(Icons.search),
-              ),
+          Positioned.fill(
+            child: Image.asset(
+              '/Users/quanganh/flutterproject/smartdocxtract/lib/assets/bg1.png',
+              fit: BoxFit.cover,
             ),
           ),
-
-          const SizedBox(height: 23),
-
-          Expanded(
-            child: GridView.builder(
-              itemCount: features.length,
-              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: 2,
-                mainAxisSpacing: 7,
-                crossAxisSpacing: 7,
-                childAspectRatio: 1.3,
-              ),
-              itemBuilder: (context, index) {
-                final feature = features[index];
-
-                return Card(
-                  elevation: 2,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(8),
+          SafeArea(
+            child: Column(
+              children: [
+                const SizedBox(height: 10),
+                const Center(
+                  child: Text(
+                    'SmartDocXtract',
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 22,
+                    ),
                   ),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      _itemCard(feature.colors, feature.icondata),
-                      const SizedBox(height: 8),
-                      Text(
-                        feature.title,
-                        textAlign: TextAlign.center,
-                        style: const TextStyle(
-                          fontSize: 16,
-                          fontWeight: FontWeight.w500,
+                ),
+                const SizedBox(height: 20),
+                Center(
+                  child: SizedBox(
+                    width: MediaQuery.of(context).size.width * 0.9,
+                    child: SearchBar(
+                      hintText: "Search features...",
+                      leading: const Icon(Icons.search),
+                    ),
+                  ),
+                ),
+                const SizedBox(height: 20),
+                Expanded(
+                  child: GridView.builder(
+                    padding: const EdgeInsets.all(12),
+                    itemCount: features.length,
+                    gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                      crossAxisCount: 2,
+                      mainAxisSpacing: 10,
+                      crossAxisSpacing: 10,
+                      childAspectRatio: 1.3,
+                    ),
+                    itemBuilder: (context, index) {
+                      final feature = features[index];
+                      return GestureDetector(
+                        onTap: () {
+                          if (feature.toNavigate != null) {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (_) => feature.toNavigate!(context),
+                              ),
+                            );
+                          }
+                        },
+                        child: Card(
+                          color: Colors.white.withOpacity(0.8),
+                          elevation: 3,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(12),
+                          ),
+                          child: Padding(
+                            padding: const EdgeInsets.all(12),
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                _itemCard(feature.colors, feature.icondata),
+                                const SizedBox(height: 12),
+                                Text(
+                                  feature.title,
+                                  maxLines: 2,
+                                  style: const TextStyle(
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.w600,
+                                    height: 1.3,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
                         ),
-                      ),
-                    ],
+                      );
+                    },
                   ),
-                );
-              },
+                ),
+              ],
             ),
           ),
         ],
@@ -74,10 +110,19 @@ class HomePage extends StatelessWidget {
       width: 50,
       height: 50,
       decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(8),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black,
+            blurRadius: 3,
+            offset: const Offset(0, 2),
+          )
+        ],
+        borderRadius: BorderRadius.circular(10),
         color: color,
       ),
-      child: Icon(icon),
+      child: Center(
+        child: Icon(icon, color: Colors.white),
+      ),
     );
   }
 }
