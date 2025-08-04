@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:smartdocxtract/bloc/doc_bloc.dart';
 import 'package:smartdocxtract/bloc/doc_event.dart';
 import 'package:smartdocxtract/bloc/doc_state.dart';
@@ -30,7 +31,7 @@ class HomePage extends StatelessWidget {
                 Center(
                   child: Text(
                     'SmartDocXtract',
-                    style: TextStyle(
+                    style: GoogleFonts.inter(
                       fontWeight: FontWeight.bold,
                       fontSize: screenWidth > 600 ? 28 : 22,
                     ),
@@ -100,7 +101,7 @@ class HomePage extends StatelessWidget {
                                     Text(
                                       feature.title,
                                       maxLines: 2,
-                                      style: TextStyle(
+                                      style: GoogleFonts.inter(
                                         fontSize: screenWidth > 600 ? 18 : 16,
                                         fontWeight: FontWeight.w600,
                                         height: 1.3,

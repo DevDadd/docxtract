@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:smartdocxtract/bloc/doc_bloc.dart';
 import 'package:smartdocxtract/bloc/doc_state.dart';
 import 'package:smartdocxtract/bloc/doc_event.dart';
@@ -13,7 +14,12 @@ class UploaddocPage extends StatelessWidget {
     final screenHeight = MediaQuery.of(context).size.height;
 
     return Scaffold(
-      appBar: AppBar(title: const Text("Upload Document")),
+      appBar: AppBar(
+        title: Text(
+          "Upload Document",
+          style: GoogleFonts.inter(fontWeight: FontWeight.w600),
+        ),
+      ),
       body: Stack(
         children: [
           Positioned.fill(
@@ -59,10 +65,10 @@ class UploaddocPage extends StatelessWidget {
                                 vertical: 12,
                               ),
                               child: Row(
-                                children: const [
+                                children: [
                                   Text(
                                     "Drag or drop your file\nhere",
-                                    style: TextStyle(
+                                    style: GoogleFonts.inter(
                                       fontSize: 18,
                                       fontWeight: FontWeight.bold,
                                     ),
@@ -124,12 +130,15 @@ class UploaddocPage extends StatelessWidget {
                                     state.file?.name ?? "No file selected",
                                     overflow: TextOverflow.ellipsis,
                                     maxLines: 1,
+                                    style: GoogleFonts.inter(
+                                      fontWeight: FontWeight.w500,
+                                    ),
                                   ),
                                   Text(
                                     state.file != null
                                         ? "${(state.file!.size / (1024 * 1024)).toStringAsFixed(2)} MB"
                                         : "",
-                                    style: TextStyle(
+                                    style: GoogleFonts.inter(
                                       fontSize: 12,
                                       color: Colors.grey[600],
                                     ),
@@ -154,7 +163,10 @@ class UploaddocPage extends StatelessWidget {
                             onPressed: () {
                               context.read<DocBloc>().add(DeleteFile());
                             },
-                            child: const Text("Delete"),
+                            child: Text(
+                              "Delete",
+                              style: GoogleFonts.inter(fontWeight: FontWeight.w600),
+                            ),
                           ),
                           SizedBox(height: 2,),
                           ElevatedButton(
@@ -164,7 +176,11 @@ class UploaddocPage extends StatelessWidget {
                             ),
                             onPressed: () {
                             context.read<DocBloc>().add(LoadFile());
-                          }, child: Text("Upload"),
+                          },
+                          child: Text(
+                            "Upload",
+                            style: GoogleFonts.inter(fontWeight: FontWeight.w600),
+                          ),
                           ),
                         ],
                       ),
