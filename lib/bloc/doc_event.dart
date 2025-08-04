@@ -12,3 +12,9 @@ class UpdateSearchQuery extends DocEvent {
   final String query;
   const UpdateSearchQuery(this.query);
 }
+
+class PickFile extends DocEvent {}
+
+class LoadFile extends DocEvent {}
+
+class DeleteFile extends DocEvent {}

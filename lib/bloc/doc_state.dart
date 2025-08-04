@@ -1,4 +1,6 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:equatable/equatable.dart';
+import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 
 import 'package:smartdocxtract/model/feature.dart';
@@ -12,8 +14,9 @@ import 'package:smartdocxtract/pages/uploaddoc_page.dart';
 class DocState extends Equatable {
   final List<Feature> features;
   final String searchQuery;
-
-  DocState({List<Feature>? features, this.searchQuery = ''})
+  final PlatformFile? file;
+  final bool isUploaded;
+  DocState({List<Feature>? features, this.searchQuery = '', this.file, this.isUploaded = false})
       : features = features ?? _defaultFeatures;
 
   static final List<Feature> _defaultFeatures = [
@@ -41,15 +44,23 @@ class DocState extends Equatable {
   ];
 
   @override
-  List<Object> get props => [features,searchQuery];
+  List<Object?> get props => [features,searchQuery,file,isUploaded];
+
+
+
 
   DocState copyWith({
     List<Feature>? features,
-    final String? searchQuery,
+    String? searchQuery,
+    PlatformFile? file,
+    bool? isUploaded,
+    bool clearFile = false,
   }) {
     return DocState(
       features: features ?? this.features,
       searchQuery: searchQuery ?? this.searchQuery,
+      file: clearFile ? null : (file ?? this.file),
+      isUploaded: isUploaded ?? this.isUploaded,
     );
   }
 }

@@ -11,6 +11,8 @@ class HomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     final docBloc = BlocProvider.of<DocBloc>(context);
     final TextEditingController _searchController = TextEditingController();
+    final screenWidth = MediaQuery.of(context).size.width;
+    final screenHeight = MediaQuery.of(context).size.height;
 
     return Scaffold(
       body: Stack(
@@ -25,16 +27,19 @@ class HomePage extends StatelessWidget {
             child: Column(
               children: [
                 const SizedBox(height: 10),
-                const Center(
+                Center(
                   child: Text(
                     'SmartDocXtract',
-                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 22),
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: screenWidth > 600 ? 28 : 22,
+                    ),
                   ),
                 ),
                 const SizedBox(height: 20),
                 Center(
                   child: SizedBox(
-                    width: MediaQuery.of(context).size.width * 0.9,
+                    width: screenWidth > 600 ? 500 : screenWidth * 0.9,
                     child: SearchBar(
                       controller: _searchController,
                       hintText: "Search features...",
@@ -57,13 +62,13 @@ class HomePage extends StatelessWidget {
                       }).toList();
 
                       return GridView.builder(
-                        padding: const EdgeInsets.all(12),
+                        padding: EdgeInsets.all(screenWidth > 600 ? 20 : 12),
                         itemCount: filteredResult.length,
-                        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                          crossAxisCount: 2,
-                          mainAxisSpacing: 10,
-                          crossAxisSpacing: 10,
-                          childAspectRatio: 1.3,
+                        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                          crossAxisCount: _getCrossAxisCount(screenWidth),
+                          mainAxisSpacing: screenWidth > 600 ? 15 : 10,
+                          crossAxisSpacing: screenWidth > 600 ? 15 : 10,
+                          childAspectRatio: screenWidth > 600 ? 1.2 : 1.3,
                         ),
                         itemBuilder: (context, index) {
                           final feature = filteredResult[index];
@@ -95,8 +100,8 @@ class HomePage extends StatelessWidget {
                                     Text(
                                       feature.title,
                                       maxLines: 2,
-                                      style: const TextStyle(
-                                        fontSize: 16,
+                                      style: TextStyle(
+                                        fontSize: screenWidth > 600 ? 18 : 16,
                                         fontWeight: FontWeight.w600,
                                         height: 1.3,
                                       ),
@@ -119,22 +124,42 @@ class HomePage extends StatelessWidget {
     );
   }
 
+  int _getCrossAxisCount(double screenWidth) {
+    if (screenWidth > 1200) return 4;
+    if (screenWidth > 800) return 3;
+    return 2;
+  }
+
   Widget _itemCard(Color color, IconData icon) {
-    return Container(
-      width: 50,
-      height: 50,
-      decoration: BoxDecoration(
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black,
-            blurRadius: 3,
-            offset: const Offset(0, 2),
+    return LayoutBuilder(
+      builder: (context, constraints) {
+        final screenWidth = MediaQuery.of(context).size.width;
+        final iconSize = screenWidth > 600 ? 60.0 : 50.0;
+        final iconSizeInner = screenWidth > 600 ? 28.0 : 24.0;
+
+        return Container(
+          width: iconSize,
+          height: iconSize,
+          decoration: BoxDecoration(
+            boxShadow: [
+              BoxShadow(
+                color: Colors.black,
+                blurRadius: 3,
+                offset: const Offset(0, 2),
+              ),
+            ],
+            borderRadius: BorderRadius.circular(10),
+            color: color,
           ),
-        ],
-        borderRadius: BorderRadius.circular(10),
-        color: color,
-      ),
-      child: Center(child: Icon(icon, color: Colors.white)),
+          child: Center(
+            child: Icon(
+              icon,
+              color: Colors.white,
+              size: iconSizeInner,
+            ),
+          ),
+        );
+      },
     );
   }
 }
